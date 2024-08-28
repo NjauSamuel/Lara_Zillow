@@ -1,12 +1,8 @@
 <template>
   
-  <MainLayout>
-
-    <div>
-      The message is {{ message }}
-    </div>
-
-  </MainLayout>
+  <div>
+    The message is {{ message }}
+  </div>
 
 </template>
 

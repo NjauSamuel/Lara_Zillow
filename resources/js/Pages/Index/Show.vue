@@ -1,8 +1,6 @@
 <template>
 
-    <MainLayout>
-        <div> Show </div>
-    </MainLayout>
+  <div> Show </div>
 
 </template>
 
