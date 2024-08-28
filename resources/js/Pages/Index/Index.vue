@@ -1,7 +1,18 @@
-<template>Hello {{ counter }}!</template>
+<template>
+  
+  <MainLayout>
+
+    <div>
+      The message is {{ message }}
+    </div>
+
+  </MainLayout>
+
+</template>
 
 <script setup>
-  import {ref} from 'vue'
-  const counter = ref(0)
-  setInterval(() => counter.value++, 1000)
+  import MainLayout from '../../Layouts/MainLayout.vue';
+  defineProps({
+    message: String
+  })
 </script>
