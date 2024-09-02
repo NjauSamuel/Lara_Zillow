@@ -36,4 +36,15 @@ class ListingController extends Controller
         return inertia('Listing/Create');
     }
 
+    /**
+     * Store the newly created resource to database.
+     */
+    public function store(Request $request)
+    {
+        Listing::create($request->all());
+
+        return redirect()->route('listing.index')
+            ->with('success', 'Listing was created!');
+    }
+
 }
