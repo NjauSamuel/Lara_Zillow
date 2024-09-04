@@ -1,8 +1,15 @@
 <template>
     <div v-for="listing in listings" :key="listing.id">
-        <Link :href="`/listing/${listing.id}`">
-            {{ listing.street }} - {{ listing.street_nr }} - {{ listing.city }}, for {{ listing.price }}
-        </Link>
+        <div>
+            <Link :href="`/listing/${listing.id}`">
+                {{ listing.street }} - {{ listing.street_nr }} - {{ listing.city }}, for {{ listing.price }}
+            </Link>
+        </div>
+    
+        <div>
+            <Link :href="`/listing/${listing.id}/edit`">Edit</Link>
+        </div>
+
     </div>
 </template>
 
