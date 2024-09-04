@@ -71,7 +71,7 @@
         street_nr: null,
     })
 
-    const create = () => form.post('/listing', form)
+    const create = () => form.post(route('listing.store'))
 
   </script>
   
