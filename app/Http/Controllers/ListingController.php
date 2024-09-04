@@ -92,4 +92,16 @@ class ListingController extends Controller
             ->with('success', 'Listing was Updated!');
     }
 
+    /**
+     * Delete the specified resource in storage.
+     */
+
+    public function destroy(Listing $listing)
+    {
+        $listing->delete();
+
+        return redirect()->back()
+            ->with('success', 'Listing was Deleted!');
+    }
+
 }
