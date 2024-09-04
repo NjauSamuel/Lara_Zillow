@@ -1,6 +1,4 @@
 <template>
-  
-  
 
   <header class="border-b border-gray-200 dark:border-gray-700 dark:bg-gray-800 bg-white w-full">
     <div class="container mx-auto">
@@ -27,8 +25,6 @@
     <slot>Default</slot>
 
   </main>
-
-  
 
 </template>
 
