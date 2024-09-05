@@ -21,21 +21,23 @@
                     Monthly Payment
                 </template>
                 <div>
-                    <label>Interest Rate (2.5%)</label>
-                    <input 
-                        type="range" min="0.1" max="30" step="0.1" 
+                    <label>Interest Rate {{interestRate}}%</label>
+                    <input
+                        v-model.number="interestRate" 
+                        type="range" min="0" max="30" step="0.1" 
                         class="w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     />
                     
-                    <label>Duration (25 years)</label>
+                    <label>Duration {{duration}} Year(s)</label>
                     <input 
+                        v-model.number="duration"
                         type="range" min="1" max="35" step="1" 
                         class="w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                     />
 
                     <div class="text-gray-600 dark:text-gray-300 mt-2">
                         <div class="text-gray-400">Your Monthly Payment</div>
-                        <Price :price="500" class="text-3-xl" />
+                        <Price :price="monthlyPayment" class="text-3-xl" />
                     </div>
                     
                 </div>
@@ -52,8 +54,34 @@
     import ListingSpace from '@/Components/ListingSpace.vue';
     import Price from '@/Components/Price.vue';
 
-    defineProps({
+    import {ref, computed} from 'vue'
+
+    
+    const props = defineProps({
         listing: Object,
+    })
+    
+    const interestRate = ref(2.5)
+    const duration = ref(25)
+
+    
+
+    // const monthlyPayment = computed(()=>{
+    //     const monthlyInterest = (interestRate.value)
+    //     return monthlyInterest
+    // })
+
+    const monthlyPayment = computed(() => {
+        const principle = props.listing.price
+        const monthlyInterest = interestRate.value / 100 / 12
+        const numberOfPaymentMonths = duration.value * 12
+
+        if (monthlyInterest === 0) {
+            // If interest rate is 0%, simply divide the principal by the number of months
+            return principle / numberOfPaymentMonths;
+        }
+
+        return principle * monthlyInterest * (Math.pow(1 + monthlyInterest, numberOfPaymentMonths)) / (Math.pow(1 + monthlyInterest, numberOfPaymentMonths) - 1)
     })
 
 </script>

@@ -9,12 +9,14 @@
         price: [Number, String],
     })
 
-    const formattedPrice = computed(
-        () => Number(props.price).toLocaleString('en-US', {
+    const formattedPrice = computed(() => {
+        const price = Math.ceil(Number(props.price)); // Truncate to the next whole number
+        
+        return price.toLocaleString('en-US', {
             style: 'currency',
             currency: 'KES',
-            maximumFractionDigits: 0,
-        }),
-    )
+            maximumFractionDigits: 0,  // No decimal places
+        });
+    });
 
 </script>
