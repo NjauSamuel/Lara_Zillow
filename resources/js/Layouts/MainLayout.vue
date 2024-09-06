@@ -14,7 +14,9 @@
         <div v-if="user" class="flex items-center gap-4">
           <div class="text-sm text-gray-500">{{ user }}</div>
           <Link :href="route('listing.create')" class="btn-primary"> + New Listing </Link>
-          <div>Logout</div>          
+          <div>
+            <Link :href="route('logout')" method="delete" as="button">Logout</Link>
+          </div>          
         </div>
         <div v-else>
           <Link :href="route('login')">Sign-In</Link>
@@ -48,7 +50,7 @@
   )
 
   const user = computed(
-    () => page.props.user.name
+    () => page.props.user?.name
   )
   
 </script>
