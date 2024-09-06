@@ -5,7 +5,7 @@
             <div>
                 <label class="label" for="email">E-Mail (Username)</label>
                 <input type="text" id="email" class="input" v-model="form.email" />
-                <div class="input-error">Pottential Errors</div>
+                <div class="input-error" v-if="form.errors.email">{{ form.errors.email }}</div>
             </div>
 
             <div class="mt-4">
@@ -20,6 +20,7 @@
                         <span v-else>Show</span>
                     </button>
                 </div>
+                <div class="input-error" v-if="form.errors.password">{{ form.errors.password }}</div>
             </div>
 
             <div class="mt-4">
@@ -40,6 +41,10 @@
         email: null,
         password: null,
     })
+
+    // The above use form is a helper from Inertia. (It is not a native vue function)
+    // Using the above useForm function, you can access errors through
+    // form.errors.email
 
     const login = () => form.post(route('login.store'))
 
