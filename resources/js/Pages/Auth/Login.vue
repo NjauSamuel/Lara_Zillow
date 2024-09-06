@@ -10,7 +10,16 @@
 
             <div class="mt-4">
                 <label class="label" for="password">Password</label>
-                <input type="text" id="password" class="input" v-model="form.password" />
+                <div class="relative">
+                    <!-- Password Input -->
+                    <input :type="showPassword ? 'text' : 'password'" id="password" class="input pr-10" v-model="form.password" />
+
+                    <!-- Toggle Button -->
+                    <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 text-gray-500" @click="togglePasswordVisibility">
+                        <span v-if="showPassword">Hide</span>
+                        <span v-else>Show</span>
+                    </button>
+                </div>
             </div>
 
             <div class="mt-4">
@@ -25,6 +34,7 @@
 <script setup>
 
     import {useForm} from '@inertiajs/vue3'
+    import {ref} from 'vue'
 
     const form = useForm({
         email: null,
@@ -32,5 +42,13 @@
     })
 
     const login = () => form.post(route('login.store'))
+
+    // State to toggle password visibility
+    const showPassword = ref(false)
+
+    // Function to toggle password visibility
+    const togglePasswordVisibility = () => {
+        showPassword.value = !showPassword.value
+    }
 
 </script>
