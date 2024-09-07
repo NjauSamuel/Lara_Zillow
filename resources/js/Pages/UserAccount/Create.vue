@@ -70,7 +70,7 @@
     // Using the above useForm function, you can access errors through
     // form.errors.email
 
-    const lregister = () => form.post(route(''))
+    const register = () => form.post(route('user-account.store'))
 
     // State to toggle password visibility
     const showPassword = ref(false)
