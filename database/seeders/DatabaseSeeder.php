@@ -20,6 +20,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@gmail.com',
         ]);
 
+        User::factory()->create([
+            'name' => 'Test 2 User',
+            'email' => 'test2@gmail.com',
+        ]);
+
         \App\Models\Listing::factory(20)->create([
             'by_user_id' => 1
         ]);

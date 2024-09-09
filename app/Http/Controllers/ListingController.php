@@ -41,18 +41,20 @@ class ListingController extends Controller
      */
     public function store(Request $request)
     {
-        Listing::create(
-            $request->validate([
-                'beds' => 'required|integer|min:0|max:20',
-                'baths' => 'required|integer|min:0|max:20',
-                'area' => 'required|integer|min:15|max:1500',
-                'city' => 'required',
-                'code' => 'required',
-                'street' => 'required',
-                'street_nr' => 'required|min:1|max:10000',
-                'price' => 'required|integer|min:10000|max:200000000',
-            ])
-        );
+        //Validating data from Users
+        $validated_data = $request->validate([
+            'beds' => 'required|integer|min:0|max:20',
+            'baths' => 'required|integer|min:0|max:20',
+            'area' => 'required|integer|min:15|max:1500',
+            'city' => 'required',
+            'code' => 'required',
+            'street' => 'required',
+            'street_nr' => 'required|min:1|max:10000',
+            'price' => 'required|integer|min:10000|max:200000000',
+        ]);
+
+        // Using the validated data to create the new listing. 
+        $request->user()->listings()->create($validated_data);
 
         return redirect()->route('listing.index')
             ->with('success', 'Listing was created!');
