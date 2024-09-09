@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ListingController extends Controller
 {
@@ -23,6 +24,11 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
+
+        if (Auth::user()->cannot('view', $listing)){
+            abort(403, 'Only Owner Can View');
+        }
+        
         return inertia('Listing/Show', [
             'listing' => $listing
         ]);
@@ -33,6 +39,10 @@ class ListingController extends Controller
      */
     public function create()
     {
+        if (Auth::user()->cannot('create', Listing::class)){
+            abort(403, 'Only Admin Can Add Post');
+        }
+
         return inertia('Listing/Create');
     }
 
