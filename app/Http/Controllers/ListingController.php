@@ -24,11 +24,6 @@ class ListingController extends Controller
      */
     public function show(Listing $listing)
     {
-
-        if (Auth::user()->cannot('view', $listing)){
-            abort(403, 'Only Owner Can View');
-        }
-        
         return inertia('Listing/Show', [
             'listing' => $listing
         ]);
@@ -39,10 +34,6 @@ class ListingController extends Controller
      */
     public function create()
     {
-        if (Auth::user()->cannot('create', Listing::class)){
-            abort(403, 'Only Admin Can Add Post');
-        }
-
         return inertia('Listing/Create');
     }
 
@@ -76,6 +67,10 @@ class ListingController extends Controller
 
     public function edit(Listing $listing)
     {
+        if (Auth::user()->cannot('edit', $listing)){
+            abort(403, 'You Can Only Edit Your Posts');
+        }
+
         return inertia('Listing/Edit', [
             'listing' => $listing
         ]);
@@ -87,6 +82,10 @@ class ListingController extends Controller
 
     public function update(Request $request, Listing $listing)
     {
+        if (Auth::user()->cannot('update', $listing)){
+            abort(403, 'You Can Only Update Your Posts');
+        }
+
         $listing->update(
             $request->validate([
                 'beds' => 'required|integer|min:0|max:20',
@@ -110,6 +109,10 @@ class ListingController extends Controller
 
     public function destroy(Listing $listing)
     {
+        if (Auth::user()->cannot('delete', $listing)){
+            abort(403, 'You Can Only Delete Your Posts');
+        }
+
         $listing->delete();
 
         return redirect()->back()
