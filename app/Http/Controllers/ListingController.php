@@ -14,7 +14,9 @@ class ListingController extends Controller
     public function index()
     {
         return inertia('Listing/Index', [
-            'listings' => Listing::orderBy('created_at', 'desc')->paginate(10)
+            'listings' => Listing::orderBy('created_at', 'desc')
+                            ->paginate(10)
+                            ->withQueryString()
         ]);
     }
 
