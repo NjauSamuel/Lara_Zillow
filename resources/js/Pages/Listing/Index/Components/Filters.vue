@@ -7,7 +7,7 @@
                     type="text" placeholder="Price From" class="input-filter-l w-28"
                 />
                 <input 
-                    v-model.number="filterForm.PriceTo"
+                    v-model.number="filterForm.priceTo"
                     type="text" placeholder="Price To" class="input-filter-r w-28"
                 />
             </div>
@@ -45,7 +45,7 @@
 
     const filterForm = useForm({
         priceFrom: props.priceFrom ?? null,
-        PriceTo: props.priceTo ?? null,
+        priceTo: props.priceTo ?? null,
         beds: props.beds ?? null,
         baths: props.baths ?? null,
         areaFrom: props.areaFrom ?? null,
