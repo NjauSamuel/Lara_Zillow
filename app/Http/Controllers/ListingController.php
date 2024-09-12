@@ -18,38 +18,12 @@ class ListingController extends Controller
             'priceFrom', 'priceTo', 'beds', 'baths', 'areaFrom', 'areaTo'
         ]);
 
-        $query = Listing::orderBy('created_at', 'desc')
-            ->when(
-                $filters['priceFrom'] ?? false,
-                fn($query, $value) => $query->where('price', '>=', $value)
-            )->when(
-                $filters['priceTo'] ?? false,
-                fn($query, $value) => $query->where('price', '<=', $value)
-            )->when(
-                $filters['beds'] ?? false,
-                fn($query, $value) => $query->where('beds', (int)$value < 6 ? '=' : '>=', $value)
-            )->when(
-                $filters['baths'] ?? false,
-                fn($query, $value) => $query->where('baths', (int)$value < 6 ? '=' : '>=', $value)
-            )->when(
-                $filters['areaFrom'] ?? false,
-                fn($query, $value) => $query->where('area', '>=', $value)
-            )->when(
-                $filters['areaTo'] ?? false,
-                fn($query, $value) => $query->where('area', '<=', $value)
-            );
-
-
-        // Above I've chosen to use the when metod instead of an if else statement that is
-        // repeated multiple times like the one below, the advantage of using when is that
-        // you can chain the methods as shown above instead of separate if statements like below. 
-        // if(isset($filters['priceFrom'])){
-        //     $query->where('price', '>=', $filters['priceFrom']);
-        // }
-
         return inertia('Listing/Index', [
             'filters' => $filters,
-            'listings' => $query->paginate(9)->withQueryString()
+            'listings' => Listing::mostRecent()
+                ->filter($filters)
+                ->paginate(9)
+                ->withQueryString()
         ]);
     }
 

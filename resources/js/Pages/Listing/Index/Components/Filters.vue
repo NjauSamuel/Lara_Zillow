@@ -64,7 +64,7 @@
 
     const clear = () => {
         filterForm.priceFrom = null
-        filterForm.PriceTo = null
+        filterForm.priceTo = null
         filterForm.beds = null
         filterForm.baths = null
         filterForm.areaFrom = null
