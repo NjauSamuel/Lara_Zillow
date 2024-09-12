@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -62,8 +63,17 @@ class RealtorListingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Listing $listing)
     {
-        //
+
+        if (Auth::user()->cannot('delete', $listing)){
+            abort(403, 'You Can Only Delete Your Posts');
+        }
+
+        $listing->deleteOrFail();
+
+        return redirect()->back()
+            ->with('success', 'Listing was Deleted!');
     }
+    
 }
