@@ -45,6 +45,9 @@ class Listing extends Model
         )->when(
             $filters['areaTo'] ?? false,
             fn($query, $value) => $query->where('area', '<=', $value)
+        )->when( // Added filter to fetch deleted values from the database. 
+            $filters['deleted'] ?? false,
+            fn($query, $value) => $query->withTrashed()
         );
 
         // Above I've chosen to use the when method instead of an if else statement that is
