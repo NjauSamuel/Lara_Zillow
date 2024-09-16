@@ -20,9 +20,11 @@ class RealtorListingController extends Controller
             ...$request->only(['by', 'order'])
         ];
         
-        return inertia(
+        return inertia(            
             'Realtor/Index',
-            ['listings' => Auth::user()
+            [
+                'filters' => $filters,
+                'listings' => Auth::user()
                 ->listings()
                 // ->mostRecent()
                 ->filter($filters)->get()

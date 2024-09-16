@@ -2,7 +2,7 @@
     <h1 class="text-3xl mb-4">Your Listings</h1>
 
     <section>
-        <RealtorFilters />
+        <RealtorFilters :filters="filters"/>
     </section>
 
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-2">
@@ -41,6 +41,9 @@
     import { Link } from '@inertiajs/vue3'
     import RealtorFilters from '@/Pages/Realtor/Index/Components/RealtorFilters.vue'
 
-    defineProps({listings: Array})
+    defineProps({
+        listings: Array,
+        filters: Object
+    })
 
 </script>
