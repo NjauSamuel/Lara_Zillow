@@ -39,7 +39,7 @@ class RealtorListingController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('Realtor/Create');
     }
 
     /**
@@ -47,8 +47,24 @@ class RealtorListingController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        //Validating data from Users
+        $validated_data = $request->validate([
+            'beds' => 'required|integer|min:0|max:20',
+            'baths' => 'required|integer|min:0|max:20',
+            'area' => 'required|integer|min:15|max:1500',
+            'city' => 'required',
+            'code' => 'required',
+            'street' => 'required',
+            'street_nr' => 'required|min:1|max:10000',
+            'price' => 'required|integer|min:10000|max:200000000',
+        ]);
+
+        // Using the validated data to create the new listing. 
+        $request->user()->listings()->create($validated_data);
+
+        return redirect()->route('realtor.listing.index')
+            ->with('success', 'Listing was created!');
+    }    
 
     /**
      * Display the specified resource.
@@ -61,18 +77,44 @@ class RealtorListingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+     public function edit(Listing $listing)
+     {
+         if (Auth::user()->cannot('edit', $listing)){
+             abort(403, 'You Can Only Edit Your Posts');
+         }
+ 
+         return inertia('Realtor/Edit', [
+             'listing' => $listing
+         ]);
+     }
+ 
+     /**
+      * Update the specified resource in storage.
+      */
+ 
+     public function update(Request $request, Listing $listing)
+     {
+         if (Auth::user()->cannot('update', $listing)){
+             abort(403, 'You Can Only Update Your Posts');
+         }
+ 
+         $listing->update(
+             $request->validate([
+                 'beds' => 'required|integer|min:0|max:20',
+                 'baths' => 'required|integer|min:0|max:20',
+                 'area' => 'required|integer|min:15|max:1500',
+                 'city' => 'required',
+                 'code' => 'required',
+                 'street' => 'required',
+                 'street_nr' => 'required|min:1|max:10000',
+                 'price' => 'required|integer|min:10000|max:200000000',
+             ])
+         );
+ 
+         return redirect()->route('realtor.listing.index')
+             ->with('success', 'Listing was Updated!');
+     }
 
     /**
      * Remove the specified resource from storage.
