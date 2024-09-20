@@ -12,6 +12,15 @@
         </form>
     </Box>
 
+    <Box v-if="listing.images.length" class="mt-4">
+        <template #header>Current Lising Images</template>
+        <section class="mt-4 grid grid-cols-3 gap-3">
+            <div v-for="image in listing.images">
+                <img :src="image.src" alt="" class="rounded-md" />
+            </div>
+        </section>
+    </Box>
+
 </template>
 
 <script setup>
