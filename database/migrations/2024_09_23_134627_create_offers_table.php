@@ -28,6 +28,8 @@ return new class extends Migration
 
             $table->unsignedInteger('amount'); // Unsigned means we only accept positive values. 
 
+            $table->timestamps();
+
             $table->timestamp('accepted_at')->nullable();
             
             $table->timestamp('rejected_at')->nullable();
