@@ -7,7 +7,7 @@
                 <input v-model.number="form.amount" type="text" class="input" />
                 <input
                     v-model.number="form.amount"
-                    type="range" :min="min" :max="max" step="500000" 
+                    type="range" :min="min" :max="max" step="100000" 
                     class="mt-1 w-full h-4 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                 />
 
@@ -46,6 +46,6 @@
     const difference = computed(() => form.amount - props.price)
 
     // For the maximum and minimum values of the sliders. 
-    const min = computed(() => props.price / 2)
+    const min = computed(() => (Math.round((props.price / 2) / 1_000_000) * 1_000_000) + (props.price % 1_000_000));
     const max = computed(() => props.price * 2)
 </script>
