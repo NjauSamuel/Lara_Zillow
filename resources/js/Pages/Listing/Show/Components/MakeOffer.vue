@@ -33,7 +33,8 @@
     import Box from '@/Components/UI/Box.vue';
     import Price from '@/Components/Price.vue'
     import {useForm} from '@inertiajs/vue3'
-    import { computed } from 'vue'
+    import { computed, watch } from 'vue'
+    import { debounce } from 'lodash';
 
     const props = defineProps({
         listingId: Number,
@@ -59,4 +60,13 @@
     // For the maximum and minimum values of the sliders. 
     const min = computed(() => (Math.round((props.price / 2) / 1_000_000) * 1_000_000) + (props.price % 1_000_000));
     const max = computed(() => props.price * 2)
+
+    // The funciton below doesn't have to be explicitly imported, same as the defineProps function
+    // To emit an event, you have to assign the result of the emited call to a variable
+    const emit = defineEmits(['offerUpdated'])
+
+    watch(
+        () => form.amount, 
+        debounce((value) => emit('offerUpdated', value), 200),
+    )
 </script>

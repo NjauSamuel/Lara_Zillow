@@ -73,7 +73,9 @@
 
             <MakeOffer 
                 v-if="user"
-                :listing-id="listing.id" :price="listing.price" 
+                :listing-id="listing.id" 
+                :price="listing.price" 
+                @offer-updated="offer = $event"
             />
             <Box v-else>
                 <template #header>
@@ -107,11 +109,14 @@
     const props = defineProps({
         listing: Object,
     })
+
+    // Receiving the offer from the MakeOffer Component. 
+    const offer = ref(props.listing.price)
     
     const interestRate = ref(2.5)
     const duration = ref(25)
 
-    const { monthlyPayment, totalPaid, totalInterest } = useMonthlyPayment(props.listing.price, interestRate, duration)
+    const { monthlyPayment, totalPaid, totalInterest } = useMonthlyPayment(offer, interestRate, duration)
     
 
 </script>
