@@ -36,8 +36,12 @@ class ListingController extends Controller
 
         $listing->load(['images']);
         
+        // Disable unauthorized users from making offers. 
+        $offer = !Auth::user() ? null : $listing->offers()->byMe()->first();   // The scoped method mentioned is in the offer model. 
+
         return inertia('Listing/Show', [
-            'listing' => $listing
+            'listing' => $listing, 
+            'offerMade' => $offer
         ]);
     }
 

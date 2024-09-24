@@ -72,16 +72,20 @@
             </Box>
 
             <MakeOffer 
-                v-if="user"
+                v-if="user && !offerMade"
                 :listing-id="listing.id" 
                 :price="listing.price" 
                 @offer-updated="offer = $event"
             />
-            <Box v-else>
+
+            <OfferMade v-if="user && offerMade" :offer="offerMade" />
+
+            <Box v-if="!user">
                 <template #header>
                     Login To Make an Offer!
                 </template>
             </Box>
+
         </div>
     </div>
 
@@ -97,6 +101,7 @@
     import MakeOffer from '@/Pages/Listing/Show/Components/MakeOffer.vue';
     import {ref, computed} from 'vue'
     import { usePage } from '@inertiajs/vue3'
+    import OfferMade from '@/Pages/Listing/Show/Components/OfferMade.vue';
 
 
     const page = usePage()
@@ -108,6 +113,7 @@
     
     const props = defineProps({
         listing: Object,
+        offerMade: Object
     })
 
     // Receiving the offer from the MakeOffer Component. 
