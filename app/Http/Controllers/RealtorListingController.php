@@ -29,10 +29,20 @@ class RealtorListingController extends Controller
                 // ->mostRecent()
                 ->filter($filters)
                 ->withCount('images')
+                ->withCount('offers') // To count the appearances of a relationship offers. 
                 ->paginate(8)->
                 withQueryString()
             ]
         );
+    }
+
+    // A count route for showing offers
+    public function show(Listing $listing)
+    {
+        return inertia(
+            'Realtor/Show', 
+            ['listing' => $listing->load('offers')]
+    );
     }
 
     /**
@@ -65,14 +75,6 @@ class RealtorListingController extends Controller
 
         return redirect()->route('realtor.listing.index')
             ->with('success', 'Listing was created!');
-    }    
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
