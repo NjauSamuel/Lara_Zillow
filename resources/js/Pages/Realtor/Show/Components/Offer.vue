@@ -1,6 +1,6 @@
 <template>
     <Box>
-        <template #header>Offer #{{ offer.id }}</template>        
+        <template #header>Offer #{{ offer.id }} </template>        
 
         <section class="flex items-center justify-between">
             <div>
@@ -19,9 +19,12 @@
             </div>
             <div>
                 <Link 
+                    v-if="notSold"
                     :href="route('realtor.offer.accept', {offer: offer.id})"
                     class="btn-outline text-xs font-medium" as="button" method="put"
                 >Accept</Link>
+                <span v-if="offer.accepted_at" class="dark:bg-green-900 dark:text-green-200 text-green-900 bg-green-200 p-1 rounded-md uppercase ml-2">accepted</span>
+                <span v-if="offer.rejected_at" class="dark:bg-red-900 dark:text-red-200 text-red-900 bg-red-200 p-1 rounded-md uppercase ml-2">Rejected</span>
             </div>
         </section>
     </Box>
@@ -46,6 +49,10 @@
 
     const madeOn = computed(
         () => new Date (props.offer.created_at).toDateString()
+    )
+
+    const notSold = computed(
+        () => !props.offer.accepted_at && !props.offer.rejected_at
     )
 
 </script>
