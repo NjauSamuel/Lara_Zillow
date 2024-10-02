@@ -29,4 +29,11 @@ class Offer extends Model
     {
         return $query->where('bidder_id', Auth::user()?->id);
     }
+
+    // Scope to reject all other offers by other people. 
+    // Will fetch all current offers exept the accepted one. 
+    public function scopeExcept(Builder $query, Offer $offer): Builder
+    {
+        return $query->where('id', '!=', $offer->id);
+    }
 }
