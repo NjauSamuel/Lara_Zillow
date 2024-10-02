@@ -77,4 +77,12 @@ class Listing extends Model
         //     $query->where('price', '>=', $filters['priceFrom']);
         // }
     }
+
+    public function scopeWithoutSold(Builder $query): Builder
+    {
+        return $query->doesntHave('offers')
+            ->orWhereHas('offers', 
+            fn(Builder $query) => $query->whereNull('accepted_at')
+            ->whereNull('rejected_at'));
+    }
 }
