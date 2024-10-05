@@ -53,3 +53,4 @@ class RealtorListingImageController extends Controller
         return redirect()->back()->with('success', 'Image was deleted. ');
     }
 }
+
