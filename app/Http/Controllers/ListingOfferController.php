@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use App\Models\Offer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ListingOfferController extends Controller
 {
     // The Store Offer Method
     public function store(Listing $listing, Request $request)
     {
+
+        if (Auth::user()->cannot('view', $listing)){
+            abort(403, 'You Can Only Make offers to existing Listings. ');
+        }
+
         $listing->offers()->save(
             Offer::make(
                 $request->validate([

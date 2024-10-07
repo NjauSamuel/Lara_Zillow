@@ -18,6 +18,31 @@ class ListingPolicy
         return null;
     }
 
+     /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(?User $user)
+    {
+        return true;
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     *
+     * @param  \App\Models\User  $user
+     * @param  \App\Models\Listing  $listing
+     * @return \Illuminate\Auth\Access\Response|bool
+     */
+    public function view(?User $user, Listing $listing)
+    {
+        if($listing->by_user_id === $user?->id){
+            return true;
+        }
+
+        return $listing->sold_at === null;
+    }
+
+
     /**
      * Determine whether the user can create models.
      */
@@ -31,7 +56,7 @@ class ListingPolicy
      */
     public function update(User $user, Listing $listing): bool
     {
-        return $user->id === $listing->by_user_id;
+        return $listing->sold_at === null && ($user->id === $listing->by_user_id);
     }
 
     /**

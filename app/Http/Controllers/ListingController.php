@@ -32,9 +32,14 @@ class ListingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Listing $listing)
+    public function show(Listing $listing, Request $request)
     {
 
+        // Authorization for viewing the listing
+        if ($request->user() && $request->user()->cannot('view', $listing)) {
+            abort(403); // Unauthorized
+        }
+        
         $listing->load(['images']);
         
         // Disable unauthorized users from making offers. 
