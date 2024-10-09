@@ -6,10 +6,12 @@
     </section>
 
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-        <Box v-for="listing in listings.data" :key="listing.id" :class="{'border-dashed': listing.deleted_at}">
-            <div class="flex flex-col md:flex-row gap-2 md:items-center justify-between">
+        <Box v-for="listing in listings.data" :key="listing.id" :class="{'border-dashed': listing.deleted_at}" >
+            <div class="flex flex-col md:flex-row gap-2 md:items-center justify-between relative">
                 
                 <div :class="{'opacity-25' : listing.deleted_at}">
+
+                    <div v-if="listing.sold_at != null" class="text-lg absolute bg-green-500 font-bold text-white top-0 left-0 rounded-md px-1">Sold</div>
                     <div class="xl:flex items-center gap-2">
                         <Price :price="listing.price" class="text-2xl font-medium"/>
                         <ListingSpace :listing="listing" />
