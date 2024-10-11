@@ -1,9 +1,15 @@
 <template>
-    <h1 class="text-3xl mb-4">Your Listings</h1>
+    <h1 class="text-3xl mb-4 inline mr-5">Your Listings</h1>
+    <Link :href="route('realtor.listing.create')" class="btn-primary"> + New Listing </Link>
+
 
     <section>
         <RealtorFilters :filters="filters"/>
     </section>
+
+    <Box v-if="!listings.length" class="flex min-h-[60vh] items-center justify-center">
+      Your Listings Will Appear In This Page! 
+    </Box>
 
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-2">
         <Box v-for="listing in listings.data" :key="listing.id" :class="{'border-dashed': listing.deleted_at}" >
