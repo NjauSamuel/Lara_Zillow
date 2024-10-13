@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class RealtorListingController extends Controller
 {
@@ -39,10 +41,14 @@ class RealtorListingController extends Controller
     // A count route for showing offers
     public function show(Listing $listing)
     {
+
+        // Authorizaiton to view Listings. 
+        Gate::allowIf(fn (User $user) => $user->id === $listing->by_user_id);
+
         return inertia(
             'Realtor/Show', 
             ['listing' => $listing->load('offers', 'offers.bidder')]
-    );
+        );
     }
 
     /**
