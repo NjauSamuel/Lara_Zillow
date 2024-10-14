@@ -55,6 +55,10 @@
       {{ flashSuccess }}
     </div>
 
+    <div v-if="flashMessage" class="mb-4 border rounded-md shadow-sm border-blue-200 dark:border-blue-800 bg-blue-100 dark:bg-blue-900 p-2">
+      {{ flashMessage }}
+    </div>
+
     <slot>Default</slot>
 
   </main>
@@ -69,6 +73,11 @@
   const page = usePage()
   const flashSuccess = computed(
     () => page.props.flash.success
+  )
+
+  // A message returned by Laravel. 
+  const flashMessage = computed(
+    () => page.props.flash.message
   )
 
   const user = computed(

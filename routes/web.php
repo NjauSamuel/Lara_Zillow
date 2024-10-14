@@ -10,6 +10,8 @@ use App\Http\Controllers\RealtorListingController;
 use App\Http\Controllers\RealtorListingImageController;
 use App\Http\Controllers\UserAccountController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 
 Route::get('/', [ListingController::class, 'index']);
@@ -64,3 +66,19 @@ Route::put('notification/{notification}/seen', NotificationSeenController::class
 Route::get('/email/verify', function () {
     return inertia('Auth/VerifyEmail');
 })->middleware('auth')->name('verification.notice');
+
+
+// 2. Page after user clicks the email that was sent over to them. 
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+ 
+    return redirect('listing')
+    ->with('success', 'Email Was Verified. ');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+// 3. Route for reverifying Email.  (Resending the Verification Email)
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+ 
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

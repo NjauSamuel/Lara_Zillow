@@ -7,7 +7,7 @@
         <RealtorFilters :filters="filters"/>
     </section>
 
-    <Box v-if="!listings.length" class="flex min-h-[60vh] items-center justify-center">
+    <Box v-if="!listings.data.length" class="flex min-h-[60vh] items-center justify-center">
       Your Listings Will Appear In This Page! 
     </Box>
 
@@ -93,9 +93,9 @@
     import RealtorFilters from '@/Pages/Realtor/Index/Components/RealtorFilters.vue'
     import Pagination from '@/Components/UI/Pagination.vue'
 
-    defineProps({
+    const props = defineProps({
         listings: Array,
         filters: Object
-    })
+    });
 
 </script>

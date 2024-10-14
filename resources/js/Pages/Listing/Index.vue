@@ -18,7 +18,6 @@
     import Listing from '@/Pages/Listing/Index/Components/Listing.vue';
     import Pagination from '@/Components/UI/Pagination.vue';
     import Filters from '@/Pages/Listing/Index/Components/Filters.vue';
-    import {defineProps} from 'vue';
 
     defineProps({
         listings: Object, 
