@@ -32,7 +32,7 @@ Route::resource('user-account', UserAccountController::class)
 
 Route::prefix('realtor')
     ->name('realtor.')
-    ->middleware('auth')
+    ->middleware(['auth', 'verified'])    
     ->group(function() {
 
         Route::put('listing/{listing}/restore', 
@@ -57,3 +57,10 @@ Route::resource('notification', NotificationController::class)
 // The Marking Notification As Read
 Route::put('notification/{notification}/seen', NotificationSeenController::class)->middleware('auth')
     ->name('notification.seen');
+
+// The Routes for the Email Verification
+
+// 1. The Email Verification Notice Page. 
+Route::get('/email/verify', function () {
+    return inertia('Auth/VerifyEmail');
+})->middleware('auth')->name('verification.notice');
