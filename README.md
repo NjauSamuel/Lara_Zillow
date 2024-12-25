@@ -16,7 +16,7 @@ Larazillow is a powerful real estate application built using Laravel, Vue.js, an
 
 ![Dark Mode App ScreenShot](public/images/Larazillow_Dark.png)
 
-![Light Mode App ScreenShot](public/images/Larazillow_Light.png.png)
+![Light Mode App ScreenShot](public/images/Larazillow_Light.png)
 
 ---
 
